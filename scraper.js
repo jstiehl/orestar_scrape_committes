@@ -40,17 +40,28 @@ var idInfo = {};
 					var $ = cheerio.load(body);
 					var pat = /\w+/;
 					$("h5").each(function(){
-						tableNames.push($(this).text());
-
-					});
-					$("h5").first().nextAll('div').each(function(){
+						var name = $(this).text().trim();
+						idInfo[name] = {};
+						$(this).nextUntil("h5").each(function(){
 							$(this).children().each(function(){
-								if($(this).hasClass('boldText') && (pat.test($(this).text())|| pat.test($(this).next().text()))){
-									console.log($(this).text().trim() + " " + $(this).next().text().trim());
-								};
+
+								if($(this).hasClass('boldText') && !$(this).next().hasClass('boldText') && pat.test($(this).next().text())){
+									
+									if ($(this).text().trim()==''){
+										idInfo[name]["Address:"] = idInfo[name]["Address:"] + " " +$(this).next().text().trim();
+									} else {
+										idInfo[name][$(this).text().trim()] = $(this).next().text().trim();
+										//console.log($(this).text().trim() + " " + $(this).next().text().trim());
+									}
+								
+								} 
+
 							});
 						});
+					});
+				console.log(idInfo);
 				});
+
 			} else {
 
 
@@ -118,11 +129,12 @@ var idInfo = {};
 
 
 				} 
+				console.log(idInfo);
 
 				}
 
-			//console.log(idInfo);
-		})
+			
+		});
 	});
 
 
