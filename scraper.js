@@ -37,9 +37,21 @@ var idInfo = {};
 			
 			if(resp.statusCode == 302){
 				request(redirectUrl, function(err, resp, body){
-					console.log(body);
+					var $ = cheerio.load(body);
+					var pat = /\w+/;
+					$("h5").each(function(){
+						tableNames.push($(this).text());
+
+					});
+					$("h5").first().nextAll('div').each(function(){
+							$(this).children().each(function(){
+								if($(this).hasClass('boldText') && (pat.test($(this).text())|| pat.test($(this).next().text()))){
+									console.log($(this).text().trim() + " " + $(this).next().text().trim());
+								};
+							});
+						});
 				});
-			}
+			} else {
 
 
 
@@ -105,12 +117,9 @@ var idInfo = {};
 				});
 
 
-				} else {
-					tableNames = ['Filer Information',
-								'Organization Information'];
+				} 
+
 				}
-
-
 
 			//console.log(idInfo);
 		})
