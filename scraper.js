@@ -98,7 +98,7 @@ var idInfo = {};
 								$(this).find('td').each(function(index){
 								
 									if (index == 0){
-									object.election = $(this).text();
+										object.election = $(this).text();
 									} else if (index == 1){
 										object.support = $(this).text();
 									} else {
@@ -112,7 +112,9 @@ var idInfo = {};
 							
 							});
 
-						idInfo[name]["measures"] = JSON.stringify(array);
+						idInfo[name]['measures'] = array;
+						idInfo[name]=JSON.stringify(idInfo[name]);
+
 					
 					} else {
 
