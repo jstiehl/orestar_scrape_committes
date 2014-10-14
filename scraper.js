@@ -81,7 +81,6 @@ var idInfo = {};
 				tableNames.forEach(function(name) {
 					table = $('h5:contains(' + name + ')').eq(0).closest('table');
 					idInfo[name] = {};
-					
 					if (name.indexOf("opposes") != -1){
 						
 						var array = [];
@@ -116,6 +115,10 @@ var idInfo = {};
 						idInfo[name]=JSON.stringify(idInfo[name]);
 
 					
+					} else if (name.indexOf("Nature") != -1){
+
+						idInfo[name] = table.find("tr").first().next().text().trim();
+						
 					} else {
 
 
